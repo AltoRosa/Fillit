@@ -6,7 +6,7 @@
 /*   By: rmiralle <rmiralle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/30 12:13:29 by rmiralle          #+#    #+#             */
-/*   Updated: 2018/01/01 18:36:51 by rmiralle         ###   ########.fr       */
+/*   Updated: 2018/01/04 21:03:53 by rmiralle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,69 @@ static int		ft_valide(char *t)
 	return (1);
 }
 
-char		**ft_piece(char *t)
+char		**ft_piece_malloc(void)
 {
 	int		i;
 	char	**fraiche;
 
 	i = 0;
-	if (!(fraiche = (char)malloc(sizeof(char) * )))
-	// while (t[i] != 35)
-	// 	i++;
-	// printf("%d;%d\n", i/5, i%5);
-
-	return (0);
+	if (!(fraiche = (char **)malloc(sizeof(char *) * 4)))
+		return (NULL);
+	while (i < 4)
+	{
+		if (!(fraiche[i++] = (char *)malloc(sizeof(char) * 5)))
+			return (NULL);
+	}
+	return (fraiche);
 }
+
+void	ft_print_piece(char **t)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			printf("%d : %d\n", i, j);
+			ft_putchar(t[i][j]);
+			j++;
+		}
+		i++;
+	}
+}
+
+char		**ft_piece(char *t)
+{
+	int		i;
+	int		x;
+	int		y;
+	char	**fraiche;
+
+	i = 0;
+	x = 0;
+	y = 0;
+	fraiche = ft_piece_malloc();
+	while (t[i])
+	{
+		if (t[i] == '\n')
+		{
+			x++;
+			y = 0;
+		}
+		// fraiche[x][y] = t[i];
+		y++;
+		i++;
+	}
+	ft_print_piece(fraiche);
+	return (fraiche);
+}
+
+
 
 int			main(int argc, char **argv)
 {
